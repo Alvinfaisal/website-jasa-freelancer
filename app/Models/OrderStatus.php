@@ -26,4 +26,12 @@ class OrderStatus extends Model
     'created_at',
     'deleted_at',
   ];
+
+  // relation
+
+  // one to many
+  public function order()
+  {
+    return $this->hasMany('App\Models\Order', 'order_status_id');
+  }
 }

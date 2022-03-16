@@ -33,4 +33,28 @@ class DetailUser extends Model
     'created_at',
     'deleted_at',
   ];
+
+
+  // Relation
+
+  // Memberi tahu laravel bahwa field users_id berhubungan dengan model dari user
+  /**
+   * Blueprint untuk memberi tahunya 
+   * public function nama_fungsi()
+   * {
+   *  return $this->belongsTo('Path/Lokasi/Model', 'field_yang_ada_pada_table_ini', 'dan_terkait_denan_field_apaEx:id pada table users');
+   * }
+   */
+
+  // one to one 
+  public function user()
+  {
+    return $this->belongsTo('App\Models\User', 'users_id', 'id');
+  }
+
+  // one to many
+  public function experience_user()
+  {
+    return $this->hasMany('App\Models\ExperienceUser', 'detail_user_id');
+  }
 }

@@ -32,4 +32,27 @@ class Order extends Model
     'created_at',
     'deleted_at',
   ];
+
+  // relation
+
+  // one to many
+  public function user_buyer()
+  {
+    return $this->belongsTo('App\Models\User', 'buyer_id', 'id');
+  }
+
+  public function user_frelancer()
+  {
+    return $this->belongsTo('App\Models\User', 'frelancer_id', 'id');
+  }
+
+  public function service()
+  {
+    return $this->belongsTo('App\Models\Service', 'service_id', 'id');
+  }
+
+  public function order_status()
+  {
+    return $this->belongsTo('App\Models\OrderStatus', 'order_status_id', 'id');
+  }
 }
