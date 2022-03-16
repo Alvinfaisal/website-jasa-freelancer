@@ -2,6 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 
+
+// front (Landing Page)
+use App\Http\Controllers\Landing\LandingController;
+
+// Member (Dashboard Page)
+use App\Http\Controllers\Dashboard\MemberController;
+use App\Http\Controllers\Dashboard\MyOrderController;
+use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\Dashboard\RequestController;
+use App\Http\Controllers\Dashboard\ServiceController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,10 +25,44 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//   return view('welcome');
+// });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+//   return view('dashboard');
+// })->name('dashboard');
+
+
+// Membuar route default- yang bisa diakses sebelum login tanpa perlu authentication
+Route::get('detail_booking/{id}', LandingController::class, 'detail_booking')->name('detail.booking.landing');
+Route::get('booking/{id}', LandingController::class, 'booking')->name('booking.landing');
+Route::get('detail/{id}', LandingController::class, 'detail')->name('detail.landing');
+Route::get('explore', LandingController::class, 'explore')->name('explore.landing');
+Route::resource('/', LandingController::class);
+
+Route::group(
+  ['prefix' => 'member', 'as' => 'member.', 'middleware' => ['auth:sanctum', 'verified']],
+  function () {
+
+
+    //  Dashboard
+    Route::resource('dashboard', MemberController::class);
+
+    // Service
+    Route::resource('service', ServiceController::class);
+
+    // Request
+    Route::get('approve_request/{id}', RequestController::class, 'approve')->name('approve.request');
+    Route::resource('request', RequestController::class);
+
+    // MyOrder
+    Route::get('accept/order/{id}', MyOrderController::class, 'accepted')->name('accept.order');
+    Route::get('reject/order/{id}', MyOrderController::class, 'rejected')->name('reject.order');
+    Route::resource('order', MyOrderController::class);
+
+    // Profile
+    Route::get('delete_photo', ProfileController::class, 'delete')->name('delete.photo.profile');
+    Route::resource('profile', ProfileController::class);
+  }
+);
