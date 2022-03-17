@@ -1,9 +1,9 @@
-<a href="details.php" class="inline-block px-3">
-    <div class="w-96 h-auto overflow-hidden md:p-5 p-4 bg-white rounded-2xl inline-block">
+<a href="{{ route('detail.landing', 1) }}" class="block">
+    <div class="w-auto h-auto overflow-hidden md:p-5 p-4 bg-white rounded-2xl inline-block">
         <div class="flex items-center space-x-2 mb-6">
             <!--Author's profile photo-->
             <img class="w-14 h-14 object-cover object-center rounded-full mr-1"
-                src="https://randomuser.me/api/portraits/men/1.jpg" alt="random user" />
+                src="{{ url('https://randomuser.me/api/portraits/men/1.jpg') }}" alt="random user" />
             <div>
                 <!--Author name-->
                 <p class="text-gray-900 font-semibold text-lg">Alex Jones</p>
@@ -23,7 +23,7 @@
         </h1>
         <!--Description-->
         <div class="max-w-full">
-            @include('.components.Landing.rating')
+            @include('components.Landing.rating')
         </div>
 
         <div class="text-center mt-5 flex justify-between w-full">
