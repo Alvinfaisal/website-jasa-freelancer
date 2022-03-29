@@ -3,18 +3,20 @@
     <div class="text-serv-bg">
 
         <div class="" href="#">
-            <img src="{{ asset('/assets/images/logo-serama.svg') }}" alt="" class="object-center mx-auto my-8 ">
+            <a href="{{ route('explore.landing') }}">
+                <img src="{{ asset('/assets/images/logo-serama.svg') }}" alt="" class="object-center mx-auto my-8 ">
+            </a>
         </div>
 
         <div class="flex items-center pt-8 pl-5 space-x-2 border-t border-gray-100">
             <!--Author's profile photo-->
             <img class="object-cover object-center mr-1 rounded-full w-14 h-14"
-                src="{{ url('https://randomuser.me/api/portraits/men/1.jpg') }}" alt="random user" />
+                src="{{ url(Storage::url(auth()->user()->detail_user()->first()->photo)) }}" alt="random user" />
             <div>
                 <!--Author name-->
                 <p class="font-semibold text-gray-900 text-md">{{ Auth::user()->name }}</p>
                 <p class="text-sm font-light text-serv-text">
-                    Ngarep Jadi Developer
+                    {{ Auth::user()->detail_user->role }}
                 </p>
             </div>
         </div>

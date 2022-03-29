@@ -68,8 +68,7 @@
 
                         {{-- Foto masih statis --}}
                         <img class="inline ml-3 h-12 w-12 rounded-full"
-                            src="{{ url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80') }}"
-                            alt="">
+                            src="{{ url(Storage::url(auth()->user()->detail_user()->first()->photo)) }}" alt="">
                         <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}"
                             class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1">
                             <path fill-rule="evenodd"
