@@ -39,22 +39,22 @@ class MemberController extends Controller
     // eloquent untuk mengambil data
 
     // digunakan untuk table latest order
-    $orders = Order::where('freelancer_id', Auth::user()->id)->get();
+    $orders = Order::where('frelancer_id', Auth::user()->id)->get();
 
     // data project yang sedang berjalan 
-    $progress = Order::where('freelancer_id', Auth::user()->id)
+    $progress = Order::where('frelancer_id', Auth::user()->id)
       ->where('order_status_id', 2)
       ->count();
 
     // data project yang sudah selesai
-    $completed = Order::where('freelancer_id', Auth::user()->id)
+    $completed = Order::where('frelancer_id', Auth::user()->id)
       ->where('order_status_id', 1)
       ->count();
 
     // data kerja sama dengan freelancer 
     $freelancer = Order::where('buyer_id', Auth::user()->id)
       ->where('order_status_id', 2)
-      ->distinct('freelancer_id')
+      ->distinct('frelancer_id')
       ->count();
 
     return view('pages.dashboard.index', [
