@@ -25,7 +25,7 @@ class Service extends Model
     'title',
     'description',
     'delivery_time',
-    'revision_time',
+    'revision_limit',
     'price',
     'note',
     'updated_at',

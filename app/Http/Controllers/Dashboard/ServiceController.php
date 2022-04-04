@@ -71,6 +71,7 @@ class ServiceController extends Controller
   {
     // Memanggil field yang sudah divalidasi pada file StoreServiceRequest
     $data = $request->all();
+    // dd($data);
     // menambahakan array users_id pada variabel $data yang diambil menggunakan id saat user sedang login
     $data['users_id'] = Auth::user()->id;
 
@@ -82,15 +83,15 @@ class ServiceController extends Controller
     foreach ($data['advantage-service'] as $key => $value) {
       $advantage_service = new AdvantageService;
       $advantage_service->service_id = $service->id;
-      $advantage_service->advantage_id = $value;
+      $advantage_service->advantage = $value;
       $advantage_service->save();
     }
 
     // add to advantage user
     foreach ($data['advantage-user'] as $key => $value) {
       $advantage_user = new AdvantageUser;
-      $advantage_user->service->id = $service->id;
-      $advantage_user->advantage_id = $value;
+      $advantage_user->service_id = $service->id;
+      $advantage_user->advantage = $value;
       $advantage_user->save();
     }
 
@@ -108,11 +109,13 @@ class ServiceController extends Controller
     }
 
     // add to tagline
-    foreach ($data['tagline'] as $key => $value) {
-      $tagline = new Tagline;
-      $tagline->service_id = $service->id;
-      $tagline->tagline = $value;
-      $tagline->save();
+    if (count($data['tagline'])) {
+      foreach ($data['tagline'] as $key => $value) {
+        $tagline = new Tagline;
+        $tagline->service_id = $service->id;
+        $tagline->tagline = $value;
+        $tagline->save();
+      }
     }
 
     toast()->success('Save has been success');
@@ -146,6 +149,7 @@ class ServiceController extends Controller
 
     //return view to edit page
     return view('pages.dashboard.service.edit', [
+      'service' => $service,
       'advantage_service' => $advantage_service,
       'advantage_user' => $advantage_user,
       'thumbnail_service' => $thumbnail_service,
@@ -169,16 +173,16 @@ class ServiceController extends Controller
     $service->update($data);
 
     // update to advantage service
-    foreach ($data['advantage-service'] as $key => $value) {
+    foreach ($data['advantage-services'] as $key => $value) {
       $advantage_service = AdvantageService::find($key);
       $advantage_service->advantage = $value;
       $advantage_service->save();
     }
 
     // add new advantage service
-    if (isset($data['advantage_service'])) {
+    if (isset($data['advantage-service'])) {
       foreach ($data['advantage-service'] as $key => $value) {
-        $advantage_service = AdvantageService::find($key);
+        $advantage_service = new AdvantageService;
         $advantage_service->service_id = $service->id;
         $advantage_service->advantage = $value;
         $advantage_service->save();
@@ -186,16 +190,16 @@ class ServiceController extends Controller
     }
 
     // update to advantage user
-    foreach ($data['advantage-user'] as $key => $value) {
+    foreach ($data['advantage-users'] as $key => $value) {
       $advantage_user = AdvantageUser::find($key);
       $advantage_user->advantage = $value;
       $advantage_user->save();
     }
 
     // add new advantage user
-    if (isset($data['advantage_user'])) {
+    if (isset($data['advantage-user'])) {
       foreach ($data['advantage-user'] as $key => $value) {
-        $advantage_user = AdvantageUser::find($key);
+        $advantage_user = new AdvantageUser;
         $advantage_user->service_id = $service->id;
         $advantage_user->advantage = $value;
         $advantage_user->save();
@@ -203,17 +207,17 @@ class ServiceController extends Controller
     }
 
     // update to tagline
-    foreach ($data['tagline'] as $key => $value) {
+    foreach ($data['taglines'] as $key => $value) {
       $tagline = Tagline::find($key);
       $tagline->tagline = $value;
       $tagline->save();
     }
 
-    // add new tagline
+    //add new tagline
     if (isset($data['tagline'])) {
       foreach ($data['tagline'] as $key => $value) {
-        $tagline = Tagline::find($key);
-        $tagline->service_id = $service->id;
+        $tagline = new Tagline;
+        $tagline->service_id = $service['id'];
         $tagline->tagline = $value;
         $tagline->save();
       }
@@ -247,7 +251,7 @@ class ServiceController extends Controller
       }
     }
 
-    // tadd to thumbnail service
+    // add to thumbnail service
     if ($request->hasFile('thumbnail')) {
       foreach ($request->file('thumbnail') as $key => $file) {
         $path = $file->store(

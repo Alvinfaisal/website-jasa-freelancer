@@ -42,7 +42,7 @@ class UpdateServiceRequest extends FormRequest
         'required', 'integer', 'max:100',
       ],
       //Untuk validasi inputan
-      'revision_time' => [
+      'revision_limit' => [
         'required', 'integer', 'max:100',
       ],
       'price' => [
