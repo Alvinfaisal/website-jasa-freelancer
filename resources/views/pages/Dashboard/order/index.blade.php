@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('title', 'Order')
+
 @section('content')
+
     <main class="h-full overflow-y-auto">
         <div class="container mx-auto">
             <div class="grid w-full gap-5 px-10 mx-auto md:grid-cols-12">
@@ -10,7 +12,7 @@
                         My Orders
                     </h2>
                     <p class="text-sm text-gray-400">
-                        3 Total Orders
+                        {{ auth()->user()->order_frelancer()->count() }} Total Orders
                     </p>
                 </div>
                 <div class="col-span-4 lg:text-right">
@@ -18,6 +20,7 @@
                 </div>
             </div>
         </div>
+
         <section class="container px-6 mx-auto mt-5">
             <div class="grid gap-5 md:grid-cols-12">
                 <main class="col-span-12 p-4 md:pt-0">
@@ -32,7 +35,7 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white">
-                                <tr class="text-gray-700 border-b">
+                                {{-- <tr class="text-gray-700 border-b">
                                     <td class="px-1 py-5 text-sm w-2/8">
                                         <div class="flex items-center text-sm">
                                             <div class="relative w-10 h-10 mr-3 rounded-full md:block">
@@ -196,7 +199,7 @@
                                             Reject
                                         </a>
                                     </td>
-                                </tr>
+                                </tr> --}}
                             </tbody>
                         </table>
                     </div>
