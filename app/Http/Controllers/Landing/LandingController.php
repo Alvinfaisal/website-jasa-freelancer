@@ -146,6 +146,7 @@ class LandingController extends Controller
     // validation booking - tidak bisa booking servicenya sendiri
     if ($service->users_id == $user_buyer) {
       toast()->warning('Sorry, members cannot book their own service');
+      return back();
     }
 
     $order = new Order;

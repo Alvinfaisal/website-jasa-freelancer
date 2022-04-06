@@ -4,14 +4,23 @@
 
         <div class="" href="#">
             <a href="{{ route('explore.landing') }}">
-                <img src="{{ asset('/assets/images/logo-serama.svg') }}" alt="" class="object-center mx-auto my-8 ">
+                <img src="{{ asset('/assets/images/logo.svg') }}" alt="" class="object-center mx-auto my-8 ">
             </a>
         </div>
 
         <div class="flex items-center pt-8 pl-5 space-x-2 border-t border-gray-100">
             <!--Author's profile photo-->
-            <img class="object-cover object-center mr-1 rounded-full w-14 h-14"
-                src="{{ url(Storage::url(auth()->user()->detail_user()->first()->photo)) }}" alt="random user" />
+            {{-- validation photo --}}
+            @if (auth()->user()->detail_user()->first()->photo != null)
+                <img class="inline ml-3 h-12 w-12 rounded-full"
+                    src="{{ url(Storage::url(auth()->user()->detail_user()->first()->photo)) }}" alt=""
+                    loading="lazy" />
+            @else
+                <svg class="inline ml-3 h-12 w-12 rounded-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+            @endif
             <div>
                 <!--Author name-->
                 <p class="font-semibold text-gray-900 text-md">{{ Auth::user()->name }}</p>
@@ -102,7 +111,7 @@
                   </svg> -->
                     <span class="ml-4">My Request</span>
                     <span
-                        class="inline-flex items-center justify-center px-3 py-2 ml-auto text-xs font-bold leading-none text-green-500 rounded-full bg-serv-green-badge">3</span>
+                        class="inline-flex items-center justify-center px-3 py-2 ml-auto text-xs font-bold leading-none text-green-500 rounded-full bg-serv-green-badge">{{ auth()->user()->order_buyer()->count() }}</span>
 
                 </a>
             </li>
@@ -136,7 +145,7 @@
                   </svg> -->
                     <span class="ml-4">My Orders</span>
                     <span
-                        class="inline-flex items-center justify-center px-3 py-2 ml-auto text-xs font-bold leading-none text-green-500 rounded-full bg-serv-green-badge">10</span>
+                        class="inline-flex items-center justify-center px-3 py-2 ml-auto text-xs font-bold leading-none text-green-500 rounded-full bg-serv-green-badge">{{ auth()->user()->order_frelancer()->count() }}</span>
 
                 </a>
             </li>

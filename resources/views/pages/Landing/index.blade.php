@@ -6,6 +6,7 @@
     <!-- top -->
     <div class="hero-bg">
         <!-- header -->
+
         <!-- hero -->
         <div class="hero">
             <div class="mx-auto flex pt-16 pb-16 lg:pb-20 lg:px-24 md:px-16 sm:px-8 px-8 lg:flex-row flex-col">
@@ -32,7 +33,7 @@
                 <!-- Right Column -->
                 <div class="w-full lg:w-1/2 text-center lg:justify-start justify-center flex pr-0">
                     <img class="bottom-0 lg:block lg:right-24 md:right-16 sm:right-8 right-8 w-75"
-                        src="{{ asset('/assets/daco.png') }}" alt="" />
+                        src="{{ asset('/assets/hero-image.png') }}" alt="" />
                 </div>
             </div>
             <div class="lg:mb-20 mb-10 flex sm:space-x-4 space-x-1">
@@ -66,7 +67,11 @@
                 </div>
                 <div class="flex overflow-x-scroll pb-10 hide-scroll-bar dragscroll -mx-3">
                     <div class="flex flex-nowrap">
-                        @include('/components/landing.service')
+                        @forelse ($services as $item)
+                            @include('components.landing.service')
+                        @empty
+                            {{-- empty --}}
+                        @endforelse
                     </div>
 
                 </div>

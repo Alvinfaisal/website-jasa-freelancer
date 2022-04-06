@@ -83,7 +83,7 @@ class MyOrderController extends Controller
     $service = Service::where('id', $order['service_id'])->first();
     $thumbnail = ThumbnailService::where('service_id', $order['service_id'])->get();
     $advantage_service = AdvantageService::where('service_id', $order['service_id'])->get();
-    $advantage_user = AdvantageUser::where('servie_id', $order['service_id'])->get();
+    $advantage_user = AdvantageUser::where('service_id', $order['service_id'])->get();
     $tagline = Tagline::where('service_id', $order['service_id'])->get();
 
     // Return to show pages
